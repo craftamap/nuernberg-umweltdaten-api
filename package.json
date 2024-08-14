@@ -1,4 +1,13 @@
 {
   "name": "nuernberg-umweltdaten-api",
-  "packageManager": "yarn@4.1.1"
+  "packageManager": "yarn@4.4.0",
+  "type": "module",
+  "devDependencies": {
+    "@tsconfig/node22": "^22.0.0",
+    "@types/node": "^22.2.0",
+    "tsx": "^4.17.0"
+  },
+  "scripts": {
+    "start": "tsx main.mts"
+  }
 }
