@@ -29,8 +29,8 @@ export type GetStationsRequest =
 export type GetStationsResponse = GenericResponse<{
     id_station: number;
     name: string;
-    station_code: string;
-    measure_list: string;
+    station_code?: string;
+    measure_list?: string;
 }[]>;
 
 export type GetMeasuresRequest = {

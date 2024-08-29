@@ -8,5 +8,5 @@ console.log('getStations:', stations);
 
 const stationCode = stations.message[6].station_code;
 console.log("getMeasures:", await getMeasures(stationCode))
-console.log("getValaues:", await getValues(stationCode, "oxygen", 30))
+console.log("getValues:", await getValues(stationCode, "oxygen", 30))
 
