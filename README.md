@@ -65,6 +65,45 @@ that can be obtained with the different endpoints (see below).
 
 You can find samples for all of these endpoints at `lib.mts`.
 
+### `get`
+
+**Description**: Returns values of a specific measurements available at a specific station.
+
+**Endpoint**: `https://microservices.nuernberg.de/umweltdaten/api/umweltdaten/get/`
+
+**Request**:
+
+```typescript
+type GetValuesRequest = {
+    cat: "0" | "1" | "2",
+    measure: string,
+    type: string,
+} & ({ 
+        date_yesterday: string  // returns data of 24h beginning at date_yesterday. Specified in `%d.%m.%Y %H:%M:%S` 
+                                // (german date format). Appears to be in german local time.
+    } | {
+        days: number // number of days of values to return. max seems to be 30. -1 returns the latest measurement only.
+    })
+```
+
+**Response**:
+
+```typescript
+type GetValuesResponse = GenericResponse<({
+    [key: string]: string | number | null; // key is the name of the requested measure.
+} & {
+    date_entry: string; // timestamp of the measurement in %d.%m.%Y %H:%M:%S. Appears to be in german local time.
+})[]>;
+```
+
+<details>
+    <summary>curl example</summary>
+
+```bash
+curl -XPOST https://microservices.nuernberg.de/umweltdaten/api/umweltdaten/get/ -d '{"cat": "1", "type": "FLH", "measure": "air_temperature", "days": 1}'
+```
+</details>
+
 ### `get_editorial`
 
 **Description**: Returns various, human readable information about all measuring stations.
@@ -220,43 +259,6 @@ curl -XPOST https://microservices.nuernberg.de/umweltdaten/api/umweltdaten/get_m
 </details>
 
 
-### `get`
-
-**Description**: Returns values of a specific measurements available at a specific station.
-
-**Endpoint**: `https://microservices.nuernberg.de/umweltdaten/api/umweltdaten/get/`
-
-**Request**:
-
-```typescript
-type GetValuesRequest = {
-    cat: "0" | "1" | "2",
-    measure: string,
-    type: string,
-} & ({ 
-        date_yesterday: string  // returns data of 24h beginning at date_yesterday. Specified in `%d.%m.%Y %H:%M:%S` 
-                                // (german date format). Appears to be in german local time.
-    } | {
-        days: number // number of days of values to return. max seems to be 30. -1 returns the latest measurement only.
-    })
-
-**Response**:
-
-```typescript
-type GetValuesResponse = GenericResponse<({
-    [key: string]: string | number | null; // key is the name of the requested measure.
-} & {
-    date_entry: string; // timestamp of the measurement in %d.%m.%Y %H:%M:%S. Appears to be in german local time.
-})[]>;
-```
-
-<details>
-    <summary>curl example</summary>
-
-```bash
-curl -XPOST https://microservices.nuernberg.de/umweltdaten/api/umweltdaten/get/ -d '{"cat": "1", "type": "FLH", "measure": "air_temperature", "days": 1}'
-```
-</details>
 
 ## TODOs
 
