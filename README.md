@@ -239,6 +239,7 @@ curl -XPOST https://microservices.nuernberg.de/umweltdaten/api/umweltdaten/get_s
 type GetMeasuresRequest = {
     type: string,
 }
+```
 
 **Response**:
 
